@@ -54,6 +54,10 @@ header-wrap {
 	text-shadow: 0 0 1vw rgba(0,0,0,0.8);
 }
 
+header-wrap.splash {
+	opacity: 0;
+}
+
 body.splash header-wrap {
 	display: none;
 }
