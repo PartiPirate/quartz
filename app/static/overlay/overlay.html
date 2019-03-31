@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+	<title>PP Overlay</title>
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="css/fancy-anim.css">
+	<link rel="stylesheet" type="text/css" href="css/speaker-card.css">
+	<link rel="stylesheet" type="text/css" href="css/splash-screen.css">
+	<script src="js/main.js"></script>
+	<script src="js/utils.js"></script>
+	<script src="js/components/donations-gauge.js"></script>
+	<script src="js/components/fancy-anim.js"></script>
+	<meta charset="utf-8">
+</head>
+<body>
+	<screen>
+
+		<video src="img/istockphoto-948295764-640_adpp_is.mp4" autoplay loop muted style="position: absolute; width: 100%; height: 100%;"></video>
+		
+		<header-wrap>
+			<header-topic>Conférence de presse du Parti Pirate pour les élections européennes</header-topic>
+			<header-date></header-date>
+		</header-wrap>
+
+
+		<speaker-card class=" " style="display: none;">
+			<speaker-name>
+				<div class="name">Cédric <span>Levieux</span></div>
+				<div class="ref twitter">farlistener</div>
+			</speaker-name>
+			<speaker-role>
+					N°2 sur la liste &laquo; Piratons l'Europe ! &raquo;
+			</speaker-role>
+			<div class="frame">
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+		</speaker-card>
+
+		
+
+		<splash-screen class="translucid">
+			<div class="bg"></div>
+			<!--<div class="name">partipirate.org</div>-->
+
+			<div class="music-wrapper">
+				<div class="equalizer-icon"><div></div><div></div><div></div><div></div></div>
+				<span class="song">WikiLeaks and the Need for Free Speech</span> <span class="artist">&ndash; Dan Bull</span>
+			</div>
+
+			<div class="splash-name">
+				<span class="thin">parti</span><span class="bold">pirate</span><span class="thin">.org</span>
+			</div>
+
+			<div class="splash-text">
+				On arrive très vite.<br>
+				00:00:00
+			</div>
+
+
+		</splash-screen>
+
+
+		<pp-logo></pp-logo>
+
+
+		<script>
+			function getRandomInt(min, max) {
+				min = Math.ceil(min);
+				max = Math.floor(max);
+				return Math.floor(Math.random() * (max - min + 1)) + min;
+			}
+
+			function monthIntToFull(month){
+				switch (month){
+					case 0: return 'Janvier';
+					case 1: return 'Février';
+					case 2: return 'Mars';
+					case 3: return 'Avril';
+					case 4: return 'Mai';
+					case 5: return 'Juin';
+					case 6: return 'Juillet';
+					case 7: return 'Août';
+					case 8: return 'Septembre';
+					case 9: return 'Octobre';
+					case 10: return 'Novembre';
+					case 11: return 'Décembre';
+				}
+			}
+
+			document.addEventListener('DOMContentLoaded', function(){
+				var html = '';
+
+				for (var i=0;i<40;i++){
+					html += '<div style="'
+					html += 'animation-duration: '+getRandomInt(18,36)+'s; ';
+					html += 'animation-delay: '+getRandomInt(-17,0)+'s; ';
+					html += 'margin-left: '+(getRandomInt(0,10)/10)+'vw; ';
+					if (Math.random() > 0.5){
+						html += 'animation-direction: reverse;';
+					}
+					html += '"></div>';
+				}
+
+				/*
+
+				animation-duration: 23s;
+				animation-delay: 0s;
+				margin-left: 0.3vw;
+				animation-direction: reverse;
+				*/
+
+				document.getElementsByTagName("fancy-anim")[0].innerHTML = html;
+
+
+				var d = new Date();
+				var s = d.getDate() + ' ' + monthIntToFull(d.getMonth()) + ' ' + d.getFullYear();
+
+				document.querySelector('header-date').innerHTML = s;
+			}, 200);
+
+			setTimeout(function(){
+				document.querySelector('speaker-card').style.display = 'block';
+			}, 10);
+
+
+			//setInterval(function(){
+			setTimeout(function(){
+				document.body.classList.toggle('splash');
+			//}, 5000);
+			}, 2000);
+		</script>
+
+	</screen>
+</body>
+</html>

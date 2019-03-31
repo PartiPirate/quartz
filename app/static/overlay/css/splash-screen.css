@@ -1,0 +1,153 @@
+splash-screen {
+	display: none;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	/*background-color: #8348b5;*/
+
+	opacity: 0;
+	display: block;
+	transition: 0.4s all ease-out;
+}
+
+splash-screen .bg {
+	position: absolute;
+	width: 300%;
+	height: 300%;
+	background-color: #8348b5;
+	background-image: url('../img/bg_splash.png');
+	filter: brightness(0.6);
+
+	animation: 120s splash-marquee infinite linear;
+	display: block;
+	transition: 0.4s all ease-out;
+}
+
+splash-screen.translucid .bg {
+	opacity: 0.9;
+}
+
+splash-screen .name {
+	position: absolute;
+	bottom: 4vw;
+	left: 0;
+	right: 4vw;
+	text-align: right;
+	color: white;
+	font-size: 2vw;
+}
+
+splash-screen .music-wrapper {
+	position: absolute;
+	bottom: 3vw;
+	right: 3vw;
+	color: white;
+	text-align: right;
+}
+
+splash-screen .music-wrapper .song {
+	opacity: 0.9;
+}
+
+splash-screen .music-wrapper .artist {
+	font-weight: 100;
+	opacity: 0.7;
+}
+
+
+splash-screen .music-wrapper .equalizer-icon {
+	display: inline-block;
+	margin-right: 0.4vw;
+	transform: translateY(-0.1vw);
+}
+
+splash-screen .music-wrapper .equalizer-icon div {
+	display: inline-block;
+	width: 0.3vw;
+	height: 1.2vw;
+	margin-right: 0.1vw;
+	background-color: white;
+	vertical-align: middle;
+	animation: 1s splash-music-eq infinite linear;
+}
+
+splash-screen .music-wrapper .equalizer-icon div:nth-child(1) {
+	height: 1.2vw;
+	animation-duration: 1.2s;
+}
+splash-screen .music-wrapper .equalizer-icon div:nth-child(2) {
+	height: 0.8vw;
+	animation-duration: 0.8s;
+}
+splash-screen .music-wrapper .equalizer-icon div:nth-child(3) {
+	height: 0.9vw;
+	animation-duration: 1.6s;
+}
+splash-screen .music-wrapper .equalizer-icon div:nth-child(4) {
+	height: 1.2vw;
+	animation-duration: 1.3s;
+}
+
+
+@keyframes splash-music-eq {
+	0%, 100% {
+		clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+	}
+
+	50% {
+		clip-path: polygon(0 40%, 100% 40%, 100% 60%, 0 60%);
+	}
+}
+
+
+
+@keyframes splash-marquee {
+	to {
+		transform: translate(-628px,-1260px);
+	}
+}
+
+body.splash splash-screen {
+	opacity: 1;
+}
+
+/* */
+
+body.splash pp-logo {
+	/*right: 40vw;
+	top: 8vw;*/
+	width: 10vw;
+	height: 10vw;
+	background-image: url('../img/pp_large.png');
+}
+
+/* */
+
+
+splash-screen .splash-text {
+	position: absolute;
+	left: 4vw;
+	bottom: 4vw;
+	color: white;
+	font-size: 6vw;
+}
+
+splash-screen .splash-name {
+	position: absolute;
+	color: white;
+	top: 5.4vw;
+	right: 14.5vw;
+	font-size: 3vw;
+}
+splash-screen .splash-name .bold {
+	font-weight: 500;
+}
+
+splash-screen .splash-name .thin {
+	font-weight: 100;
+}
+
+
+body.splash donations-wrap {
+	transform: translate(-1vw, -4vw);
+}
