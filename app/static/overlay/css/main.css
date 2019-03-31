@@ -35,6 +35,14 @@ pp-logo {
 	transition: 0.4s all ease-out;
 }
 
+pp-logo.splash {
+	/*right: 40vw;
+	top: 8vw;*/
+	width: 10vw;
+	height: 10vw;
+	background-image: url('../img/pp_large.png');
+}
+
 
 header-wrap {
 	display: block;
@@ -62,66 +70,3 @@ header-wrap header-date {
 	margin-top: 0.2vw;
 }
 
-donations-wrap {
-	position: absolute;
-	display: block;
-	bottom: 4vw;
-	right: 4vw;
-	width: 22vw;
-	font-size: 0.9em;
-	color: white;
-	text-align: center;
-	border: 1px solid white;
-	background-color: rgba(0,0,0,0.7);
-}
-
-donations-wrap donations-title,
-donations-wrap donations-count {
-	display: block;
-}
-
-donations-count {
-	font-weight: 400;
-}
-
-donations-title {
-	color: #7443b8;
-	background-color: white;
-	padding: 0.2em;
-}
-
-donations-count span {
-	font-size: 0.9em;
-	font-weight: 200;
-}
-
-donations-gauge-wrapper-wrap {
-	width: 70%;
-	display: block;
-	border: 1px solid white;
-	padding: 0.1em;
-	margin: 0.6em auto;
-}
-
-donations-gauge-wrapper {
-	position: relative;
-	display: block;
-	background-color: #333;
-	height: 0.3vw;
-}
-
-donations-gauge {
-	display: block;
-	width: 0%;
-	height: 100%;
-	background-color: #7443b8;
-	background-color: white;
-}
-
-donations-link {
-	display: block;
-	color: white;
-	padding: 0.2em;
-	margin-top: 0.2em;
-	margin-bottom: 0.4em;
-}

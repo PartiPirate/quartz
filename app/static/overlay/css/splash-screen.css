@@ -43,6 +43,11 @@ splash-screen .music-wrapper {
 	right: 3vw;
 	color: white;
 	text-align: right;
+	display: none;
+}
+
+splash-screen .music-wrapper.visible {
+	display: block;
 }
 
 splash-screen .music-wrapper .song {
@@ -107,21 +112,9 @@ splash-screen .music-wrapper .equalizer-icon div:nth-child(4) {
 	}
 }
 
-body.splash splash-screen {
+splash-screen.active {
 	opacity: 1;
 }
-
-/* */
-
-body.splash pp-logo {
-	/*right: 40vw;
-	top: 8vw;*/
-	width: 10vw;
-	height: 10vw;
-	background-image: url('../img/pp_large.png');
-}
-
-/* */
 
 
 splash-screen .splash-text {
@@ -148,6 +141,3 @@ splash-screen .splash-name .thin {
 }
 
 
-body.splash donations-wrap {
-	transform: translate(-1vw, -4vw);
-}

@@ -1,20 +1,21 @@
 var Quartz = {
-	components: {},
+	_components: {},
 	_ready: false,
 	_intervals: {},
 	_timeouts: {},
 	_listeners: {},
+	_eventListeners: {},
 	registerComponent: function(name, component){
 		component._name = name;
 
-		Quartz.components[name] = component
+		Quartz._components[name] = component
 		if (Quartz._ready)
 			Quartz.initializeComponents();
 		//document.body.appendChild(component.DOM());
 	},
 	initializeComponents: function(){
-		for (var c in Quartz.components){
-			var comp = Quartz.components[c];
+		for (var c in Quartz._components){
+			var comp = Quartz._components[c];
 			if (!comp._loaded){
 				Quartz.enrichComponent(comp);
 
@@ -105,6 +106,31 @@ var Quartz = {
 		comp.QZ.info = function(...args){
 			args.unshift('['+comp._name+']');
 			console.info.apply(this, args);
+		};
+
+
+		comp.QZ.onEvent = function(eventName, callback){
+			this.offEvent(eventName);
+			Quartz._eventListeners[this._name][eventName] = callback;
+		};
+
+		comp.QZ.offEvent = function(eventName, callback){
+			if (!Quartz._eventListeners[this._name]){
+				Quartz._eventListeners[this._name] = {};
+			}
+
+			if (Quartz._eventListeners[this._name][eventName])
+				delete Quartz._eventListeners[this._name][eventName];
+		};
+
+		comp.QZ.broadcastEvent = function(eventName, data){
+			for (var c in Quartz._eventListeners){
+				for (var e in Quartz._eventListeners[c]){
+					if (eventName == e){
+						Quartz._eventListeners[c][e].call(Quartz._components[c], e, this._name, data);
+					}
+				}
+			}
 		};
 
 	},

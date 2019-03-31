@@ -40,6 +40,17 @@ Quartz.registerComponent('donations-gauge', {
 
 		this.QZ.info('initialized');
 
+		this.QZ.onEvent('splash', function(eventName, componentName, data){
+			if (componentName == 'splash-screen'){
+				if (data.active){
+					document.querySelector('donations-wrap').classList.add('splash');
+				} else {
+					document.querySelector('donations-wrap').classList.remove('splash');
+				}
+				this.QZ.log('received ',eventName,' from ',componentName, ' with ',data);
+			}
+		});
+
 	},
 	updateDisplay: function(){
 		document.querySelector('donations-wrap donations-title').innerHTML = this._settings.title;
