@@ -15,6 +15,17 @@ Quartz.registerComponent('fancy-anim', {
 		return `<fancy-anim>${html}</fancy-anim>`;
 	},
 	QZinit: function(){
+		this.QZ.onEvent('splash', function(eventName, componentName, data){
+			if (componentName == 'splash-screen'){
+				if (data.active){
+					document.querySelector('fancy-anim').classList.add('splash');
+				} else {
+					document.querySelector('fancy-anim').classList.remove('splash');
+				}
+			}
+		});
+
+
 		this.QZ.info('initialized');
 	}
 });

@@ -47,7 +47,6 @@ Quartz.registerComponent('donations-gauge', {
 				} else {
 					document.querySelector('donations-wrap').classList.remove('splash');
 				}
-				this.QZ.log('received ',eventName,' from ',componentName, ' with ',data);
 			}
 		});
 

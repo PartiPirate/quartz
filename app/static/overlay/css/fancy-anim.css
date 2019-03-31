@@ -7,6 +7,10 @@ fancy-anim {
 	border-left: 1px solid white;
 }
 
+fancy-anim.splash {
+	opacity: 0;
+}
+
 
 fancy-anim div {
 	position: absolute;
@@ -27,8 +31,4 @@ fancy-anim div {
 	to {
 		transform: translateY(56.25vw);
 	}
-}
-
-body.splash fancy-anim {
-	opacity: 0;
 }
