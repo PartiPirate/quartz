@@ -22,7 +22,7 @@ Quartz.registerComponent('splash-screen', {
 	},
 	_active: false,
 	_settings: {
-		'translucid': false,
+		'translucid': true,
 		'music': true,
 		'text': 'On arrive très vite.',
 		'countdown': 0, //todo date
@@ -32,7 +32,7 @@ Quartz.registerComponent('splash-screen', {
 		this.QZ.info('initialized');
 
 		this.toggleSplash(true);
-		this.QZ.interval('flip', 4*1000, function(){
+		this.QZ.interval('flip', 10*1000, function(){
 			this.toggleSplash(!this._active);
 		});
 
@@ -66,9 +66,15 @@ Quartz.registerComponent('splash-screen', {
 		this._active = active;
 
 		if (active){
-			document.querySelector('splash-screen').classList.add('active');
+			document.querySelector('splash-screen').style.display = 'block';
+			this.QZ.timeout('css-display', 200, function(){
+				document.querySelector('splash-screen').classList.add('active');
+			});
 		} else {
 			document.querySelector('splash-screen').classList.remove('active');
+			this.QZ.timeout('css-display', 1000, function(){
+				document.querySelector('splash-screen').style.display = 'none';
+			});
 		}
 
 		this.QZ.broadcastEvent('splash', {'active': active});

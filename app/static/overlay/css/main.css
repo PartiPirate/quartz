@@ -16,9 +16,9 @@ html, body, screen {
 	overflow: hidden;
 	font-family: "Ubuntu";
 
-	background-image: url('../img/bg.png');
+	/*background-image: url('../img/bg.png');
 	background-repeat: repeat;
-	background-size: 30vw;
+	background-size: 30vw;*/
 }
 
 pp-logo {

@@ -18,7 +18,7 @@ splash-screen .bg {
 	background-image: url('../img/bg_splash.png');
 	filter: brightness(0.6);
 
-	animation: 120s splash-marquee infinite linear;
+	/*animation: 120s splash-marquee infinite linear;*/
 	display: block;
 	transition: 0.4s all ease-out;
 }
