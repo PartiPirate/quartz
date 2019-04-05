@@ -5,6 +5,9 @@ var Quartz = {
 	_timeouts: {},
 	_listeners: {},
 	_eventListeners: {},
+	isDevMode: function(){
+		return (document.location.href.indexOf('?dev') > -1);
+	},
 	registerComponent: function(name, component){
 		component._name = name;
 
@@ -135,8 +138,14 @@ var Quartz = {
 
 	},
 	init: function(){
+		if (Quartz.isDevMode()){
+			//document.body.innerHTML += '<video src="img/istockphoto-948295764-640_adpp_is.mp4" autoplay loop muted style="position: absolute; width: 100%; height: 100%;"></video>';
+		}
 		Quartz.initializeComponents();
 		Quartz._ready = true;
+		if (Quartz.isDevMode()){
+			document.querySelector('html').classList.add('dev');
+		}
 	},
 };
 
