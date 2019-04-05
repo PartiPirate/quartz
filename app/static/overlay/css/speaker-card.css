@@ -83,8 +83,8 @@ speaker-card .frame div:nth-child(4) {
 		background-color: transparent;
 	}
 
-	20%, 80% {
-		background-color: white;
+	20% {
+		background-color: rgba(255,255,255,0);
 		opacity: 1;
 	}
 
@@ -94,10 +94,10 @@ speaker-card .frame div:nth-child(4) {
 }
 
 @keyframes speaker-card-appear {
-	0%, 81% {
+	0%, 60% {
 		opacity: 0;
 	}
-	84%, 100% {
+	90%, 100% {
 		opacity: 1;
 	}
 }
@@ -183,4 +183,17 @@ speaker-card.smaller {
 
 body.splash speaker-card {
 	display: none !important;
+}
+
+
+speaker-card.hiding {
+	animation: 0.4s speaker-card-disappear ease-out;
+	animation-fill-mode: forwards;
+}
+
+@keyframes speaker-card-disappear {
+	to {
+		transform: translate(-1vw, 1vw);
+		opacity: 0;
+	}
 }
