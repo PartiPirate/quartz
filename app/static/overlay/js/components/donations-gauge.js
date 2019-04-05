@@ -7,7 +7,7 @@ Quartz.registerComponent('donations-gauge', {
 					<donations-gauge></donations-gauge>
 				</donations-gauge-wrapper>
 			</donations-gauge-wrapper-wrap>
-			<donations-count>3 680 € <span>/ 27 000 €</span></donations-count>
+			<donations-count> € <span>/ €</span></donations-count>
 			<donations-link>europeennes.partipirate.org</donations-link>
 		</donations-wrap>`;
 	},
@@ -16,7 +16,9 @@ Quartz.registerComponent('donations-gauge', {
 			url: 'https://don.partipirate.org/api/getGauge.php?from_date=2017-01-01&to_date=2020-01-01&amount_path=project%3EadditionalDonation&search=%22project%22:%7B%22code%22:%22BUD_ELECTION_2019%22',
 			objectives: [
 				27000,
-				100000
+				135000,
+				270000,
+				400000
 			],
 			title: 'Campagne de dons pour les élections',
 			link: 'europeennes.partipirate.org'

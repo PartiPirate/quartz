@@ -31,11 +31,12 @@ Quartz.registerComponent('splash-screen', {
 	QZinit: function(){
 		this.QZ.info('initialized');
 
-		this.toggleSplash(true);
-		this.QZ.interval('flip', 10*1000, function(){
+		this.toggleSplash(false);
+		/*
+		this.QZ.timeout('flip', 3*1000, function(){
 			this.toggleSplash(!this._active);
 		});
-
+*/
 		this.QZ.on('settings', function(data){
 			this._settings = data;
 			this.updateDisplay();
