@@ -11,6 +11,7 @@
 	<script src="js/utils.js"></script>
 	<script src="js/components/pp-header.js"></script>
 	<script src="js/components/fancy-anim.js"></script>
+	<script src="js/components/speaker-card.js"></script>
 	<script src="js/components/splash-screen.js"></script>
 	<script src="js/components/donations-gauge.js"></script>
 	<script src="js/components/pp-logo.js"></script>
@@ -18,33 +19,7 @@
 </head>
 <body>
 	<screen>
-
-		<!--<video src="img/istockphoto-948295764-640_adpp_is.mp4" autoplay loop muted style="position: absolute; width: 100%; height: 100%;"></video>-->
 		
-
-		<speaker-card class=" " style="display: none;">
-			<speaker-name>
-				<div class="name">Cédric <span>Levieux</span></div>
-				<div class="ref twitter">farlistener</div>
-			</speaker-name>
-			<speaker-role>
-					N°2 sur la liste &laquo; Piratons l'Europe ! &raquo;
-			</speaker-role>
-			<div class="frame">
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-			</div>
-		</speaker-card>
-
-		<script>
-
-			setInterval(function(){
-				document.querySelector('speaker-card').style.display = (document.querySelector('speaker-card').style.display == 'block'?'none':'block');
-			}, 5000);
-		</script>
-
 	</screen>
 </body>
 </html>
