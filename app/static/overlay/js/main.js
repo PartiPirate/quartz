@@ -53,7 +53,7 @@ var Quartz = {
 		}
 
 		comp.QZ.send = function(messageIdentifier, data){
-			// TODO send thru websocket
+			Quartz._socket.emit('message', {"component_name": this._name, "message_identifier": messageIdentifier, "data": data});
 		};
 
 		comp.QZ.interval = function(intervalIdentifier, duration, callback){
@@ -140,12 +140,38 @@ var Quartz = {
 	init: function(){
 		if (Quartz.isDevMode()){
 			//document.body.innerHTML += '<video src="img/istockphoto-948295764-640_adpp_is.mp4" autoplay loop muted style="position: absolute; width: 100%; height: 100%;"></video>';
-		}
-		Quartz.initializeComponents();
-		Quartz._ready = true;
-		if (Quartz.isDevMode()){
 			document.querySelector('html').classList.add('dev');
 		}
+
+		Quartz._key = Quartz.utils.getQueryParameter('key');
+
+		Quartz._socket = io.connect(location.protocol+'//' + document.domain + ':' + location.port);
+		
+		Quartz._socket.on('connect', function(){
+			console.log('Socket connected.');
+			Quartz._socket.emit('join', {key: Quartz._key});
+			Quartz.initializeComponents();
+			Quartz._ready = true;
+
+		});
+
+		Quartz._socket.on('message', function(msg){
+			if (Quartz._listeners[msg.component_name]){
+				if (Quartz._listeners[msg.component_name][msg.message_identifier]){
+					Quartz._listeners[msg.component_name][msg.message_identifier].call(Quartz._components[msg.component_name], msg.data);
+				}
+			}
+		});
+
+
+		// TODO handle disconnect
+		/*
+	var socket = io.connect('http://' + document.domain + ':' + location.port);
+    socket.on('connect', function() {
+        socket.emit('my event', {data: 'I\'m connected!'});
+    });
+		*/
+
 	},
 };
 

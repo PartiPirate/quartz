@@ -16,12 +16,10 @@ Quartz.registerComponent('splash-screen', {
 				On arrive très vite.<br>
 				00:00:00
 			</div>
-
-
 		</splash-screen>`;
 	},
 	_active: false,
-	_settings: {
+	_state: {
 		'translucid': true,
 		'music': true,
 		'text': 'On arrive très vite.',
@@ -37,22 +35,22 @@ Quartz.registerComponent('splash-screen', {
 			this.toggleSplash(!this._active);
 		});
 */
-		this.QZ.on('settings', function(data){
-			this._settings = data;
+		this.QZ.on('state', function(data){
+			this._state = data;
 			this.updateDisplay();
 		});
 
-		this.QZ.send('get-settings');
+		this.QZ.send('get-state');
 		this.updateDisplay();
 	},
 	updateDisplay: function(){
 		var domElm = document.querySelector('splash-screen');
-		if (this._settings.translucid)
+		if (this._state.translucid)
 			domElm.classList.add('translucid');
 		else
 			domElm.classList.remove('translucid');
 
-		if (this._settings.music){
+		if (this._state.music){
 			domElm.querySelector('.music-wrapper').classList.add('visible');
 		}
 		else {
@@ -60,8 +58,10 @@ Quartz.registerComponent('splash-screen', {
 		}
 		// TODO start or stop music if splash is active and depending on settings and current playing state
 
-		domElm.querySelector('.splash-text').innerHTML = `${this._settings.text}<br>00:00:00`;
-		domElm.querySelector('.splash-name').innerHTML = this._settings.name;
+		domElm.querySelector('.splash-text').innerHTML = `${this._state.text}<br>00:00:00`;
+		domElm.querySelector('.splash-name').innerHTML = this._state.name;
+
+		this.toggleSplash(this._state.active);
 	},
 	toggleSplash: function(active){
 		this._active = active;
