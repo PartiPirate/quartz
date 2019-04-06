@@ -8,6 +8,7 @@
 </head>
 <body>
 	<script>
+		document.body.innerHTML = 'Connecting&hellip;';
 		var socket = io.connect('http://' + document.domain + ':' + location.port);
 		socket.on('connect', function() {
 			console.log('connected');
@@ -21,6 +22,7 @@
 
 		socket.on('room_info', function(data){
 			console.log('room info',data);
+			document.body.innerHTML = '<a href="/static/overlay/overlay.html?dev&key='+data.key+'">'+data.key+'</a>';
 		});
 
 		socket.on('message', function(data){

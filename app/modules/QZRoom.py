@@ -24,7 +24,7 @@ class Room(object):
 	def dump_info(self):
 		return {
 			"key": self._room_id,
-			"my info":"mlkqsjd"
+			"components": list(self._components.keys())
 		}
 
 	def send(self, component_name, message_identifier, data):

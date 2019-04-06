@@ -35,6 +35,11 @@ Quartz.registerComponent('splash-screen', {
 			this.toggleSplash(!this._active);
 		});
 */
+		this.QZ.on('toggle', function(data){
+			this.toggleSplash(data.active);
+			console.log('got toggle');
+		});
+
 		this.QZ.on('state', function(data){
 			this._state = data;
 			this.updateDisplay();
@@ -60,8 +65,6 @@ Quartz.registerComponent('splash-screen', {
 
 		domElm.querySelector('.splash-text').innerHTML = `${this._state.text}<br>00:00:00`;
 		domElm.querySelector('.splash-name').innerHTML = this._state.name;
-
-		this.toggleSplash(this._state.active);
 	},
 	toggleSplash: function(active){
 		this._active = active;

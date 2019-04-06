@@ -49,6 +49,9 @@ def on_create_request():
 
 @socketio.on('message')
 def on_message(data):
+	if (not session.room):
+		return
+		
 	session.room.recv(data)
 
 if __name__ == '__main__':

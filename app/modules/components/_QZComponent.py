@@ -15,8 +15,7 @@ class QZComponent(object):
 		def fn(data):
 			self.QZset_state(data)
 		self.QZon('set-state',fn)
-
-		pass
+		
 
 	def QZon(self, message_identifier, callback):
 		self._QZhandlers[message_identifier] = callback
