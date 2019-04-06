@@ -18,7 +18,7 @@ class SplashScreen(_QZComponent.QZComponent):
 		# Handlers
 		def fn(data):
 			# A bit hackish but we don't want to push the state change to every client for the toggle, because they get a toggle event already.
-			self.QZget_state()['active'] = data['active'];
+			self.QZget_state()['active'] = data['active']
 
 			self.QZsend('toggle', {'active': data['active']})
 		self.QZon('toggle_request', fn)

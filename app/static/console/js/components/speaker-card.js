@@ -1,71 +1,128 @@
 Quartz.registerComponent('speaker-card', {
 	QZDOM: function(){
 		return `
-			<form class="state">
-				<div class="form-group row">
-
-					<label class="col-sm-2 col-form-label">Toggles</label>
-
-					<div class="col-sm-10">
-						<div class="form-check form-check-inline">
-							<label>
-								<input type="checkbox" name="showDate">
-								show date
-							</label>
-						</div>
+			<pre class="current"></pre>
+			<button class="btn btn-primary" onclick="Quartz.getComponent('speaker-card').hide();">Hide</button>
+			<hr>
+			<table class="table table-sm table-striped">
+				<thead>
+					<tr>
+						<th style="width: 140px;">Show</th>
+						<th>Name</th>
+						<th>Role</th>
+						<th>Type</th>
+						<th style="width: 140px;">Edit</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td colspan="5" class="text-center">&hellip;</td></tr>
+				</tbody>
+			</table>
+			<hr>
+			<h3>Add a preset</h3>
+			<form class="add-preset">
+				<div class="row">
+					<div class="col">
+						<input type="text" name="name" class="form-control" placeholder="Name">
 					</div>
-
-					<label class="col-sm-2 col-form-label">Topic</label>
-					<div class="col-sm-10">
-						<input type="text" name="topic" class="form-control">
+					<div class="col">
+						<input type="text" name="role" class="form-control" placeholder="Role">
 					</div>
-
-					<label class="col-sm-2 col-form-label">Location</label>
-					<div class="col-sm-10">
-						<input type="text" name="location" class="form-control">
+					<div class="col">
+						<select name="type" class="form-control">
+							<option value="speaker">speaker</option>
+						</select>
 					</div>
+				</div>
+				<div class="row">
 
 				</div>
 
-				<button type="submit" class="btn btn-primary">Apply</button>
-				<button type="button" class="btn btn-outline-secondary" onclick="Quartz.getComponent('pp-header').requestState();">Cancel changes</button>
+				<button type="submit" class="btn btn-secondary">Add preset</button>
 			</form>
 		`;
 	},
+	_state: {},
 	QZinit: function(){
 		this.QZ.on('state', function(data){
-			this.updateState(data);
+			this.QZ.log('state',data);
+			this._state = data;
+			this.updateTable();
+			this.updateCurrent();
+		});
+
+		this.QZ.on('show', function(data){
+			this._state.current = data;
+			this.updateCurrent();
+		});
+
+		this.QZ.on('hide', function(data){
+			this._state.current = {active: false};
+			this.updateCurrent();
 		});
 	},
 	QZonDOMReady: function(){
-		this.QZ.getTabDOM().querySelector('form.state').addEventListener('submit', function(){
-			Quartz.getComponent('pp-header').applyForm();
+		this.QZ.getTabDOM().querySelector('form.add-preset').addEventListener('submit', function(){
+			Quartz.getComponent('speaker-card').addPresetFormSend();
 		});
 
 		this.QZ.send('get-state');
 	},
-	requestState: function(){
-		this.QZ.send('get-state');
+	hide: function(){
+		this.QZ.send('hide_req');
 	},
-	updateState: function(state){
-		var formDOM = this.QZ.getTabDOM().querySelector('form.state');
-		formDOM.querySelector('input[name=showDate]').checked = state.showDate;	
-		formDOM.querySelector('input[name=topic]').value = state.topic;
-		formDOM.querySelector('input[name=location]').value = state.location;
+	showPreset: function(presetIndex){
+		this.QZ.send('show_req', this._state.presets[presetIndex]);
 	},
-	applyForm: function(){
-		var form = Quartz.utils.form2dict(this.QZ.getTabDOM().querySelector('form.state').elements);
+	deletePreset: function(presetIndex){
+		this._state.presets.splice(presetIndex, 1);
+		this.QZ.send('set-state', this._state);
+	},
+	updateTable: function(){
+		var html = '';
+		for (var i=0;i<this._state.presets.length;i++){
+			var preset = this._state.presets[i];
+			html += `
+				<tr>
+					<td><button class="btn btn-primary" onclick="Quartz.getComponent('speaker-card').showPreset(${i});">Show</button></td>
+					<td>${Quartz.utils.escapeHTML(preset.name)}</td>
+					<td>${Quartz.utils.escapeHTML(preset.role)}</td>
+					<td>${Quartz.utils.escapeHTML(preset.type)}</td>
+					<td><button class="btn btn-outline-danger" onclick="Quartz.getComponent('speaker-card').deletePreset(${i});">Delete entry</button></td>
+				</tr>
+			`;
+		}
 
-		this.QZ.info(this.QZ.getTabDOM().querySelector('form.state').elements);
+		if (this._state.presets.length == 0)
+			html = '<tr><td colspan="5" class="text-center"><i>(no preset)</i></td></tr>';
 
-		var newState = {
-			"showDate": form.showDate.checked,
-			"topic": form.topic.value,
-			"location": form.location.value,
+		this.QZ.getTabDOM().querySelector('table tbody').innerHTML = html;
+	},
+	updateCurrent: function(){
+		this.QZ.getTabDOM().querySelector('.current').innerHTML = Quartz.utils.escapeHTML(JSON.stringify(this._state.current));
+	},
+	addPresetFormSend: function(){
+		var form = Quartz.utils.form2dict(this.QZ.getTabDOM().querySelector('form.add-preset').elements);
+
+		if (!form.name.value)
+			return;
+
+
+		var preset = {
+			type: form.type.value,
+			name: form.name.value,
+			role: form.role.value,
+			refs: []
 		};
 
-		console.log(newState);
+		this._state.presets.push(preset);
 
-		this.QZ.send('set-state', newState);
+		this.QZ.send('set-state', this._state);
+
+		// Reset form
+		this.QZ.getTabDOM().querySelectorAll('form.add-preset input[type=text]').forEach(function(elm){
+			elm.value = '';
+		});
+		this.QZ.getTabDOM().querySelector('form select[name=type]').value = speaker;
 	},
 });

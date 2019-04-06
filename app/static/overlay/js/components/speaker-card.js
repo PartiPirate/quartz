@@ -39,7 +39,6 @@ Quartz.registerComponent('speaker-card', {
 		this._visible = true;
 
 		this.QZ.timeout('show', v?500:10, function(){
-			// TODO populate dom
 			var nameHtml = `<div class="name">${data.name}</div>`;
 			if (data.refs)
 				for (var i=0;i<data.refs.length;i++){
@@ -47,6 +46,7 @@ Quartz.registerComponent('speaker-card', {
 				}
 			document.querySelector('speaker-card speaker-name').innerHTML = nameHtml;
 			document.querySelector('speaker-card speaker-role').innerHTML = data.role;
+			document.querySelector('speaker-card speaker-role').style.display = data.role?'block':'none';
 			
 			this.QZ.timeout('display-toggle', 10, function(){
 				document.querySelector('speaker-card').classList.remove('hiding');
