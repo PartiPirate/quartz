@@ -26,9 +26,14 @@ Quartz.registerComponent('pp-header', {
 	},
 	updateDisplay: function(){
 		document.querySelector('header-wrap header-topic').innerHTML = this._state.topic;
-		if (!this._state.showDate)
-			document.querySelector('header-wrap header-date').innerHTML = '';
-		else {
+
+		var dateHtml = '';
+		if (this._state.location){
+			dateHtml += this._state.location;	
+			if (this._state.showDate) dateHtml+= ', ';
+		}
+
+		if (this._state.showDate){
 			var d = new Date();
 
 			function monthIntToFull(month){
@@ -48,7 +53,9 @@ Quartz.registerComponent('pp-header', {
 				}
 			}
 
-			document.querySelector('header-wrap header-date').innerHTML = d.getDate() + ' ' + monthIntToFull(d.getMonth()) + ' ' + d.getFullYear();
+			dateHtml += d.getDate() + ' ' + monthIntToFull(d.getMonth()) + ' ' + d.getFullYear();
 		}
+
+		document.querySelector('header-wrap header-date').innerHTML = dateHtml;
 	}
 });

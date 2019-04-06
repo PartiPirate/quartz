@@ -18,5 +18,16 @@ Quartz.utils = {
 			  if (tmp[0] === name) result = decodeURIComponent(tmp[1]);
 			});
 		return result;
+	},
+	form2dict: function(form){
+		var dict = {};
+		for (var i = 0; i < form.length; i++){
+			if (form[i]['name'])
+				dict[form[i]['name']] = {
+					checked: form[i]['checked'],
+					value: form[i]['value']
+				};
+			}
+		return dict;
 	}
 };

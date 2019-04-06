@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from flask import Flask, render_template, request, session
 from flask_socketio import SocketIO, send, emit, join_room, leave_room
 import uuid

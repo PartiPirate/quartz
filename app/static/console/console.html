@@ -4,30 +4,59 @@
 	<title>Quartz Console</title>
 	<link rel="icon" href="../common/favicon.ico">
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 	<script src="../common/js/socket.io.min.js"></script>
+	<script src="../common/js/Quartz.js"></script>
+	<script src="../common/js/QuartzUtils.js"></script>
+	
+	<script src="js/main.js"></script>
+	<script src="js/components/splash-screen.js"></script>
+	<script src="js/components/pp-header.js"></script>
+	<script src="js/components/donations-gauge.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+
 </head>
 <body>
+	<view data-name="console">
+		<nav class="navbar sticky-top navbar-expand navbar-light bg-light">
+			<a class="navbar-brand"><img src="img/logo.png" style="height: 32px;"></a>
+			<div class="collapse navbar-collapse">
+				<div class="navbar-nav" id="navbar-tabs">
+
+				</div>
+			</div>
+		</nav>
+
+		<tab data-name="home">
+			hello!
+		</tab>
+
+		
+	</view>
+
+	<view data-name="landing-page">
+		<div class="form-signin">
+			<button class="btn btn-lg btn-primary btn-block" onclick="Quartz._socket.emit('create');">Create new room</button>
+			<p class="text-center">or</p>
+			<form>
+			<label for="inputEmail" class="sr-only">Enter room code</label>
+			<input type="text" class="form-control" placeholder="Enter room code" required autofocus name="key">
+			<button type="submit" class="btn btn-lg btn-secondary btn-block">Join room</button>
+			</form>
+		</div>
+	</view>
+
+	<view data-name="connecting" class="active">
+		<h1>Connecting&hellip;</h1>
+	</view>
+
 	<script>
-		document.body.innerHTML = 'Connecting&hellip;';
-		var socket = io.connect('http://' + document.domain + ':' + location.port);
-		socket.on('connect', function() {
-			console.log('connected');
-			socket.emit('create');
-		});
-
-		socket.on('new_room', function(data){
-			console.log('create success',data);
-			socket.emit('join', {key: data.key});
-		});
-
-		socket.on('room_info', function(data){
-			console.log('room info',data);
-			document.body.innerHTML = '<a href="/static/overlay/overlay.html?dev&key='+data.key+'">'+data.key+'</a>';
-		});
-
-		socket.on('message', function(data){
-			console.log('<<recv>>',data);
-		});
+		//var socket = io.connect('http://' + document.domain + ':' + location.port);
+		
+		
 	</script>
 </body>
 </html>

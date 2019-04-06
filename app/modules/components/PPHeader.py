@@ -7,8 +7,9 @@ class PPHeader(_QZComponent.QZComponent):
 
 		# Initial state
 		self.QZset_state({
-			"topic": "zzzz", #Conférence de presse du Parti Pirate pour les élections européennes
-			"showDate": True
+			"topic": "", #Conférence de presse du Parti Pirate pour les élections européennes
+			"location": "",
+			"showDate": False
 		})
 
 

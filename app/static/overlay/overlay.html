@@ -10,6 +10,8 @@
 	<link rel="stylesheet" type="text/css" href="css/speaker-card.css">
 	<link rel="stylesheet" type="text/css" href="css/splash-screen.css">
 	<script src="../common/js/socket.io.min.js"></script>
+	<script src="../common/js/Quartz.js"></script>
+	<script src="../common/js/QuartzUtils.js"></script>
 	<script src="js/main.js"></script>
 	<script src="js/utils.js"></script>
 	<script src="js/components/pp-header.js"></script>
@@ -18,10 +20,13 @@
 	<script src="js/components/splash-screen.js"></script>
 	<script src="js/components/donations-gauge.js"></script>
 	<script src="js/components/pp-logo.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function(){
+			Quartz.init(true);
+		});
+	</script>
 </head>
 <body>
-	<screen>
-
-	</screen>
+	<screen></screen>
 </body>
 </html>

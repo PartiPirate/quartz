@@ -22,7 +22,7 @@ var Quartz = {
 			if (!comp._loaded){
 				Quartz.enrichComponent(comp);
 
-				if (comp.QZDOM)
+				if (comp.QZDOM && Quartz._isOverlay)
 					document.body.innerHTML += (comp.QZDOM());
 				
 				if (comp.QZinit)
@@ -136,22 +136,58 @@ var Quartz = {
 			}
 		};
 
+		if (!Quartz._isOverlay){
+			comp.QZ.getTabDOM = function(){
+				return document.querySelector('tab[data-name='+this._name+']');
+			};
+		}
+
 	},
-	init: function(){
-		if (Quartz.isDevMode()){
+	joinRoom: function(roomId, callback){
+		//Quartz._socket.off('room_info');
+		Quartz._socket.on('room_info', function(data){
+			Quartz._roomInfo = data;
+			Quartz._key = data.key;
+			// TODO handle invalid key
+
+			Quartz.initializeComponents();
+			Quartz._ready = true;
+			Quartz._onReadyHandlers.forEach(function(callback){
+				callback();
+			});
+
+			if (callback) callback(data);
+		});
+
+		Quartz._socket.emit('join', {key: roomId});
+	},
+	_onReadyHandlers: [],
+	onReady: function(callback){
+		Quartz._onReadyHandlers.push(callback);
+		if (Quartz._ready)
+			callback();
+	},
+	getComponents: function(){
+		return Quartz._components;
+	},
+	getComponent: function(name){
+		return Quartz.getComponents()[name];
+	},
+	init: function(isOverlay){
+		Quartz._socket = io.connect(location.protocol+'//' + document.domain + ':' + location.port);
+		
+		Quartz._isOverlay = isOverlay;
+		if (isOverlay && Quartz.isDevMode()){
 			//document.body.innerHTML += '<video src="img/istockphoto-948295764-640_adpp_is.mp4" autoplay loop muted style="position: absolute; width: 100%; height: 100%;"></video>';
 			document.querySelector('html').classList.add('dev');
 		}
 
-		Quartz._key = Quartz.utils.getQueryParameter('key');
-
-		Quartz._socket = io.connect(location.protocol+'//' + document.domain + ':' + location.port);
-		
 		Quartz._socket.on('connect', function(){
 			console.log('Socket connected.');
-			Quartz._socket.emit('join', {key: Quartz._key});
-			Quartz.initializeComponents();
-			Quartz._ready = true;
+			var roomKey = Quartz.utils.getQueryParameter('key');
+			if (roomKey){
+				Quartz.joinRoom(roomKey);
+			}
 
 		});
 
@@ -174,6 +210,3 @@ var Quartz = {
 
 	},
 };
-
-
-document.addEventListener('DOMContentLoaded', Quartz.init);
