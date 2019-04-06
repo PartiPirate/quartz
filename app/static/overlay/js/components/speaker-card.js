@@ -15,32 +15,20 @@ Quartz.registerComponent('speaker-card', {
 	},
 	QZinit: function(){
 		this.QZ.onEvent('splash', function(eventName, componentName, data){
-			if (componentName == 'splash-screen' && !data.active){
+			if (componentName == 'splash-screen' && data.active){
 				this.hide();
 			}
 		});
 
-		this.QZ.info('initialized');
+		this.QZ.on('show', function(data){
+			this.show(data);
+		});
 
-		/*this.QZ.interval('aaa', 3000, function(){
-			this.show({
-				'name': "Cédric <span>Levieux</span>",
-				'refs': [
-					{'type':'twitter','value':'farlistener'}
-				],
-				'role': "N°2 sur la liste &laquo; Piratons l'Europe ! &raquo;"
-			});
-		});*/
-		this.QZ.timeout('aafra', 4000, function(){
-			/*this.show({
-				'name': "Florie <span>Marie</span>",
-				'refs': [
-					{'type':'twitter','value':'florielvm'}
-				],
-				'role': "Tête de liste &laquo; Piratons l'Europe ! &raquo;"
-			});*/
+		this.QZ.on('hide', function(data){
 			this.hide();
 		});
+
+		this.QZ.info('initialized');
 	},
 	_visible: false,
 	show: function(data){

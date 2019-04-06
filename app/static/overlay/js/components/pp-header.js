@@ -6,18 +6,13 @@ Quartz.registerComponent('pp-header', {
 		</header-wrap>`;
 	},
 	QZinit: function(){
-		this._settings = {
-			'topic': 'Conférence de presse du Parti Pirate pour les élections européennes',
-			'showDate': true
-		};
+		this._state = {};
 
-		this.QZ.on('settings', function(data){
-			this._settings = data;
+		this.QZ.on('state', function(data){
+			this._state = data;
 			this.updateDisplay();
 		});
-		this.QZ.send('get-settings');
-		this.updateDisplay();
-
+		this.QZ.send('get-state');
 
 		this.QZ.onEvent('splash', function(eventName, componentName, data){
 			if (data.active){
@@ -30,8 +25,8 @@ Quartz.registerComponent('pp-header', {
 		this.QZ.info('initialized');
 	},
 	updateDisplay: function(){
-		document.querySelector('header-wrap header-topic').innerHTML = this._settings.topic;
-		if (!this._settings.showDate)
+		document.querySelector('header-wrap header-topic').innerHTML = this._state.topic;
+		if (!this._state.showDate)
 			document.querySelector('header-wrap header-date').innerHTML = '';
 		else {
 			var d = new Date();

@@ -1,4 +1,5 @@
-from .components import SplashScreen # fixme dynamic import
+import importlib
+from os import listdir
 
 from flask_socketio import send, emit
 
@@ -9,9 +10,15 @@ class Room(object):
 		self._room_id = room_id
 		self._components = {}
 
-		# TODO dynamic component import 
-		self._components[SplashScreen.QZCOMPONENT['name']] = SplashScreen.QZCOMPONENT['class']()
-		self._components[SplashScreen.QZCOMPONENT['name']]._room = self
+		# TODO dynamic component import
+		files = listdir('modules/components')
+		for f in files:
+			if (not f.startswith('_') and f.endswith('.py')):
+				module_name = f[:-3]
+				module = importlib.import_module('.components.'+module_name, package='modules')
+
+				self._components[module.QZCOMPONENT['name']] = module.QZCOMPONENT['class']()
+				self._components[module.QZCOMPONENT['name']]._room = self
 
 		print(self._components)
 

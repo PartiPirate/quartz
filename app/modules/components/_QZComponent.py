@@ -27,7 +27,7 @@ class QZComponent(object):
 		else:
 			print('[{}] Received unknown message: {}'.format(self._QZname, message_identifier))
 
-	def QZsend(self, message_identifier, data):
+	def QZsend(self, message_identifier, data=None):
 		if (self._room):
 			self._room.send(self._QZname, message_identifier, data)
 			pass

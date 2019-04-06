@@ -20,6 +20,7 @@ Quartz.registerComponent('splash-screen', {
 	},
 	_active: false,
 	_state: {
+		'active': false,
 		'translucid': true,
 		'music': true,
 		'text': 'On arrive très vite.',
@@ -65,6 +66,9 @@ Quartz.registerComponent('splash-screen', {
 
 		domElm.querySelector('.splash-text').innerHTML = `${this._state.text}<br>00:00:00`;
 		domElm.querySelector('.splash-name').innerHTML = this._state.name;
+
+		if (this._active != this._state.active)
+			this.toggleSplash(this._state.active);
 	},
 	toggleSplash: function(active){
 		this._active = active;

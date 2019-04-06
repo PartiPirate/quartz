@@ -7,6 +7,7 @@ class SplashScreen(_QZComponent.QZComponent):
 
 		# Initial state
 		self.QZset_state({
+			"active": False,
 			"translucid": False,
 			"music": True,
 			"text": 'On arrive très vite.',
@@ -14,14 +15,11 @@ class SplashScreen(_QZComponent.QZComponent):
 			"name": '<span class="thin">parti</span><span class="bold">pirate</span><span class="thin">.org</span>'
 		})
 
-
 		# Handlers
 		def fn(data):
-			print('recv toggle')
 			self.QZsend('toggle', {'active': data['active']})
 		self.QZon('toggle_request', fn)
 		
-
 
 QZCOMPONENT = {
 	"name": "splash-screen",

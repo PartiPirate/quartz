@@ -1,34 +1,23 @@
 Quartz.registerComponent('donations-gauge', {
 	QZDOM: function(){
 		return `<donations-wrap>
-			<donations-title>Campagne de dons pour les élections</donations-title>
+			<donations-title></donations-title>
 			<donations-gauge-wrapper-wrap>
 				<donations-gauge-wrapper>
 					<donations-gauge></donations-gauge>
 				</donations-gauge-wrapper>
 			</donations-gauge-wrapper-wrap>
 			<donations-count> € <span>/ €</span></donations-count>
-			<donations-link>europeennes.partipirate.org</donations-link>
+			<donations-link></donations-link>
 		</donations-wrap>`;
 	},
 	QZinit: function(){
-		this._settings = {
-			url: 'https://don.partipirate.org/api/getGauge.php?from_date=2017-01-01&to_date=2020-01-01&amount_path=project%3EadditionalDonation&search=%22project%22:%7B%22code%22:%22BUD_ELECTION_2019%22',
-			objectives: [
-				27000,
-				135000,
-				270000,
-				400000
-			],
-			title: 'Campagne de dons pour les élections',
-			link: 'europeennes.partipirate.org'
-		};
+		this._state = {};
 
 		this.updateDisplay();
 
-
-		this.QZ.on('settings', function(data){
-			this._settings = data;
+		this.QZ.on('state', function(data){
+			this._state = data;
 			this.updateDisplay();
 			this.updateGauge();
 		});
@@ -38,7 +27,7 @@ Quartz.registerComponent('donations-gauge', {
 			this.updateGauge();
 		});
 
-		this.QZ.send('get-settings');
+		this.QZ.send('get-state');
 
 		this.QZ.info('initialized');
 
@@ -51,26 +40,26 @@ Quartz.registerComponent('donations-gauge', {
 				}
 			}
 		});
-
 	},
 	updateDisplay: function(){
-		document.querySelector('donations-wrap donations-title').innerHTML = this._settings.title;
-		document.querySelector('donations-wrap donations-link').innerHTML = this._settings.link;
+		document.querySelector('donations-wrap donations-title').innerHTML = this._state.title;
+		document.querySelector('donations-wrap donations-link').innerHTML = this._state.link;
+		document.querySelector('donations-wrap').style.display = this._state.active ? 'block':'none';
 	},
 	updateGauge: async function(){
-		if (!this._settings.url)
+		if (!this._state.url || !this._state.active)
 			return;
 
 		var that = this;
-		var response = await fetch(this._settings.url);
+		var response = await fetch(this._state.url);
 		var data = await response.json();
 
 		var amount = data.gau_amount;
 		var obj = '&infin;';
 		var width = 100;
-		if (this._settings.objectives){
-			for (var i=0;i<this._settings.objectives[i];i++){
-				var o = this._settings.objectives[i];
+		if (this._state.objectives){
+			for (var i=0;i<this._state.objectives[i];i++){
+				var o = this._state.objectives[i];
 				if (o >= amount){
 					obj = o;
 					width = (amount/o)*100;
