@@ -9,7 +9,7 @@ class SplashScreen(_QZComponent.QZComponent):
 		self.QZset_state({
 			"active": False,
 			"translucid": False,
-			"music": True,
+			"music": False,
 			"text": 'On arrive très vite.',
 			"countdown": 0,
 			"name": '<span class="thin">parti</span><span class="bold">pirate</span><span class="thin">.org</span>'

@@ -7,16 +7,11 @@ class DonationsGauge(_QZComponent.QZComponent):
 
 		# Initial state
 		self.QZset_state({
-			"active": True,
+			"active": False,
 			"url": "https://don.partipirate.org/api/getGauge.php?from_date=2017-01-01&to_date=2020-01-01&amount_path=project%3EadditionalDonation&search=%22project%22:%7B%22code%22:%22BUD_ELECTION_2019%22",
-			"objectives": [
-				27000,
-				135000,
-				270000,
-				400000
-			],
-			"title": "Campagne de dons pour les élections",
-			"link": "europeennes.partipirate.org"
+			"objectives": [],
+			"title": "",
+			"link": ""
 		})
 
 

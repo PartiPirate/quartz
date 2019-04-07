@@ -7,10 +7,7 @@ class SpeakerCard(_QZComponent.QZComponent):
 
 		# Initial state
 		self.QZset_state({
-			"presets": [
-				{"name": "Florie Marie","role":"Abc"},
-				{"name": "zzz","role":"Ddef"},
-			]
+			"presets": []
 		})
 
 		def show_req(data):
