@@ -50,3 +50,15 @@ class Room(object):
 
 
 		self._components[msg['component_name']].QZdispatch(msg['message_identifier'], msg['data'])
+
+	def get_state(self):
+		state = {}
+		for c in self._components:
+			state[c] = self._components[c].QZget_state()
+
+		return state
+
+	def set_state(self, data):
+		for c in data:
+			if c in self._components:
+				self._components[c].QZset_state(data[c])

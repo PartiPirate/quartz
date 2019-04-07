@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, Response
 from flask_socketio import SocketIO, send, emit, join_room, leave_room
 import uuid
 
@@ -55,6 +55,42 @@ def on_message(data):
 		return
 		
 	session.room.recv(data)
+
+
+import json
+import requests
+
+@socketio.on('import_state')
+def on_import_state(data):
+	if (not session.room):
+		return
+
+	try:
+		if ('url' in data):
+			r = requests.get(data['url'])
+			state = json.loads(r.text)
+		elif ('raw' in data):
+			state = json.loads(data['raw'])
+		else:
+			raise
+
+		session.room.set_state(state)
+		emit('import_callback', {"success": True})
+	except Exception as e:
+		emit('import_callback', {"success": False})
+
+
+@app.route('/export_state/<room>')
+def on_export_state(room):
+
+	room = room.split('.')[0]
+
+	raw = "{}"
+
+	if (room in Rooms):
+		raw = json.dumps(Rooms[room].get_state(), indent=2)
+
+	return Response(raw, mimetype="application/octet-stream")
 
 if __name__ == '__main__':
     socketio.run(app)

@@ -123,6 +123,6 @@ Quartz.registerComponent('speaker-card', {
 		this.QZ.getTabDOM().querySelectorAll('form.add-preset input[type=text]').forEach(function(elm){
 			elm.value = '';
 		});
-		this.QZ.getTabDOM().querySelector('form select[name=type]').value = speaker;
+		this.QZ.getTabDOM().querySelector('form select[name=type]').value = "speaker";
 	},
 });

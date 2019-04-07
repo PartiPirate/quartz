@@ -23,6 +23,19 @@ function setTab(tab){
 	});
 };
 
+var StateManager = {
+	importURL: function(url){
+		console.log('import url', url);
+		Quartz._socket.emit('import_state',{'url': url});
+		document.querySelector('tab[data-name=home] .import-status').innerHTML = 'Importing from URL&hellip;';
+	},
+	importRaw: function(raw){
+		console.log('import raw', raw);
+		Quartz._socket.emit('import_state',{'raw': raw});
+		document.querySelector('tab[data-name=home] .import-status').innerHTML = 'Importing from Raw&hellip;';
+	},
+};
+
 
 document.addEventListener('DOMContentLoaded', function(){
 	setView('connecting');
@@ -58,18 +71,47 @@ document.addEventListener('DOMContentLoaded', function(){
 			}
 		}
 
+
+		document.querySelector('tab[data-name=home]').innerHTML = `
+			<h1>Welcome to Quartz!</h1>
+			<label>Overlay URL <input readonly onclick="this.select();" value="${location.protocol+'//' + document.domain + ':' + location.port}/static/overlay/overlay.html?key=${Quartz._roomInfo.key}"></label>
+			<br><label>Room Key <input readonly onclick="this.select();" value="${Quartz._roomInfo.key}"></label>
+			<hr>
+			<h2>Import/Export</h2>
+			<a target="_blank" href="/export_state/${Quartz._roomInfo.key}.json" class="btn btn-secondary">Export current state</a>
+			<p class="import-status"></p>
+			<form class="import-url">
+				<label>Import URL:<input type="text" name="url" class="form-control"></label>
+				<button type="submit" class="btn btn-primary">Import</button>
+			</form>
+			<form class="import-raw">
+				<label>Import Raw:</label>
+				<textarea name="raw" class="form-control"></textarea>
+				<button type="submit" class="btn btn-primary">Import</button>
+			</form>
+		`;
+
+		document.querySelector('tab[data-name=home] form.import-url').addEventListener('submit', function(){
+			var form = document.querySelector('tab[data-name=home] form.import-url').elements;
+
+			StateManager.importURL(form.url.value);
+		});
+		document.querySelector('tab[data-name=home] form.import-raw').addEventListener('submit', function(){
+			var form = document.querySelector('tab[data-name=home] form.import-raw').elements;
+
+			StateManager.importRaw(form.raw.value);
+		});
+
+		Quartz._socket.on('import_callback', function(data){
+			console.info('import  callback',data);
+			document.querySelector('tab[data-name=home] .import-status').innerHTML = (data.success)?'Import successful.':'Import failed!';
+		});
+
 		document.querySelectorAll('tab form').forEach(function(elm){
 			elm.addEventListener('submit', function(e){
 				e.preventDefault();
 			});
 		});
-
-
-		document.querySelector('tab[data-name=home]').innerHTML = `
-			<label>Overlay URL <input readonly onclick="this.select();" value="${location.protocol+'//' + document.domain + ':' + location.port}/static/overlay/overlay.html?key=${Quartz._roomInfo.key}"></label>
-			<br><label>Room Key <input readonly onclick="this.select();" value="${Quartz._roomInfo.key}"></label>
-		`;
-
 		//document.querySelector('view[data-name=console]').innerHTML += '&gt;&gt;<a href="/static/overlay/overlay.html?dev&key='+Quartz._roomInfo.key+'">'+Quartz._roomInfo.key+'</a>';
 
 		setTab('home');

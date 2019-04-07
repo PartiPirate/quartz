@@ -150,11 +150,13 @@ var Quartz = {
 			Quartz._key = data.key;
 			// TODO handle invalid key
 
-			Quartz.initializeComponents();
-			Quartz._ready = true;
-			Quartz._onReadyHandlers.forEach(function(callback){
-				callback();
-			});
+			if (!Quartz._ready){
+				Quartz.initializeComponents();
+				Quartz._ready = true;
+				Quartz._onReadyHandlers.forEach(function(callback){
+					callback();
+				});
+			}
 
 			if (callback) callback(data);
 		});
