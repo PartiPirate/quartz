@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
-
 from flask import Flask, render_template, request, session, Response
 from flask_socketio import SocketIO, send, emit, join_room, leave_room
 import uuid
 
 from modules import QZRoom
 
+"""
 import logging
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
-
+"""
 
 app = Flask(__name__)
 
@@ -92,5 +92,7 @@ def on_export_state(room):
 
 	return Response(raw, mimetype="application/octet-stream")
 
+
 if __name__ == '__main__':
-    socketio.run(app)
+	app.debug = False
+	socketio.run(app, host="0.0.0.0", port="5000")
