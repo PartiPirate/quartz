@@ -44,6 +44,8 @@ Quartz.registerComponent('speaker-card', {
 				for (var i=0;i<data.refs.length;i++){
 					nameHtml += `<div class="ref ${data.refs[i].type}">${data.refs[i].value}</div>`;
 				}
+			document.querySelector('speaker-card').className = data.type;
+			document.querySelector('speaker-card speaker-name').style.backgroundImage = "url('img/speaker-card/"+data.type+".png')";
 			document.querySelector('speaker-card speaker-name').innerHTML = nameHtml;
 			document.querySelector('speaker-card speaker-role').innerHTML = data.role;
 			document.querySelector('speaker-card speaker-role').style.display = data.role?'block':'none';

@@ -31,6 +31,12 @@ Quartz.registerComponent('speaker-card', {
 					<div class="col">
 						<select name="type" class="form-control">
 							<option value="speaker">speaker</option>
+							<option value="mouse">mouse</option>
+							<option value="compass">compass</option>
+							<option value="phone">phone</option>
+							<option value="music">music</option>
+							<option value="video">video</option>
+							<option value="europe">europe</option>
 						</select>
 					</div>
 				</div>

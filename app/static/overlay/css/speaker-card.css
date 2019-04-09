@@ -2,12 +2,13 @@ speaker-card {
 	display: block;
 	position: absolute;
 	bottom: 6vw;
-	left: 8vw;
+	left: 4vw;
 
 	width: 24em;
 	/*height: 6vw;*/
 	background-color: transparent;
 	animation: 1s speaker-card-shift ease-out;
+	font-size: 1.4em;
 }
 
 @keyframes speaker-card-shift {
@@ -114,7 +115,7 @@ speaker-name {
 	background-color: #8348b5;
 	padding: 0.4vw 0.8vw;
 	padding-bottom: 1vw;
-	background-image: url('../img/speaker-card.png');
+	background-image: url('../img/speaker-card/speaker.png');
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: right;
