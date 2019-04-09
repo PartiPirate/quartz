@@ -13,20 +13,13 @@ Quartz.registerComponent('splash-screen', {
 			</div>
 
 			<div class="splash-text">
-				On arrive très vite.<br>
-				00:00:00
+				On arrive très vite.
+
 			</div>
 		</splash-screen>`;
 	},
 	_active: false,
-	_state: {
-		'active': false,
-		'translucid': true,
-		'music': true,
-		'text': 'On arrive très vite.',
-		'countdown': 0, //todo date
-		'name': '<span class="thin">parti</span><span class="bold">pirate</span><span class="thin">.org</span>'
-	},
+	_state: {},
 	QZinit: function(){
 		this.QZ.info('initialized');
 
@@ -52,7 +45,6 @@ Quartz.registerComponent('splash-screen', {
 		});
 
 		this.QZ.send('get-state');
-		this.updateDisplay();
 	},
 	updateDisplay: function(){
 		var domElm = document.querySelector('splash-screen');
@@ -69,11 +61,13 @@ Quartz.registerComponent('splash-screen', {
 		}
 		// TODO start or stop music if splash is active and depending on settings and current playing state
 
-		domElm.querySelector('.splash-text').innerHTML = `${this._state.text}<br>00:00:00`;
+		domElm.querySelector('.splash-text').innerHTML = `${this._state.text}<span class="countdown"></span>`;
 		domElm.querySelector('.splash-name').innerHTML = this._state.name;
 
 		if (this._active != this._state.active)
 			this.toggleSplash(this._state.active);
+
+		this.updateCountdown();
 	},
 	toggleSplash: function(active){
 		this._active = active;
@@ -90,8 +84,25 @@ Quartz.registerComponent('splash-screen', {
 			});
 		}
 
+		this.updateCountdown();
 		this.QZ.broadcastEvent('splash', {'active': active});
 	},
+	updateCountdown: function(){
+		this.QZ.clearInterval('refreshCountdown');
+
+		if (this._state.countdown && this._active){
+			var date = Date.parse(this._state.countdown);
+			if (isNaN(date)) return;
+
+			this.QZ.interval('refreshCountdown', 1000, function(){
+				var ms = (date-new Date().getTime());
+				if (ms < -1000*60)
+					document.querySelector('splash-screen .countdown').innerHTML = '';
+				else
+					document.querySelector('splash-screen .countdown').innerHTML = '<br>'+Quartz.utils.seconds2hms(Math.max(0, ms/1000));
+			});
+		}
+	}
 });
 
 
