@@ -31,6 +31,11 @@ Quartz.registerComponent('splash-screen', {
 		this.QZ.info('initialized');
 
 		this.toggleSplash(false);
+
+		this.QZ.onEvent('splash_req', function(eventName, componentName, data){
+			this.toggleSplash(data.active);
+		});
+
 		/*
 		this.QZ.timeout('flip', 3*1000, function(){
 			this.toggleSplash(!this._active);

@@ -30,5 +30,15 @@ Quartz.utils = {
 				};
 			}
 		return dict;
-	}
+	},
+	seconds2hms: function(secs){
+		secs = Math.floor(secs);
+
+		var mins = Math.floor(secs/60);
+		secs = secs-mins*60;
+		var hrs = Math.floor(mins/60);
+		mins = mins-hrs*60;
+
+		return `${hrs>9?hrs:'0'+hrs}:${mins>9?mins:'0'+mins}:${secs>9?secs:'0'+secs}`;
+	},
 };
