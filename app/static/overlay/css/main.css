@@ -10,7 +10,6 @@ html, body, screen {
 	padding: 0;
 	width: 100vw;
 	height: 56.25vw;
-	border-bottom: 1px solid #ccc;
 	font-size: 1.4vw;
 	overflow: hidden;
 	font-family: "Ubuntu";
@@ -24,6 +23,7 @@ html.dev screen {
 	background-image: url('../img/bg.png');
 	background-repeat: repeat;
 	background-size: 30vw;
+	border-bottom: 1px solid #ccc;
 }
 
 pp-logo {
