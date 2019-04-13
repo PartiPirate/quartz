@@ -44,6 +44,11 @@ Quartz.registerComponent('splash-screen', {
 					<div class="col-sm-10">
 						<input type="text" name="text" class="form-control">
 					</div>
+
+					<label class="col-sm-2 col-form-label">Countdown to</label>
+					<div class="col-sm-10">
+						<input type="text" name="countdown" class="form-control" placeholder="yyyy-mm-dd hh:mm:ss" maxlength="19">
+					</div>
 				</div>
 
 				<button type="submit" class="btn btn-primary">Apply</button>
@@ -95,6 +100,7 @@ Quartz.registerComponent('splash-screen', {
 		formDOM.querySelector('input[name=translucid]').checked = state.translucid;	
 		formDOM.querySelector('input[name=name]').value = state.name;	
 		formDOM.querySelector('input[name=text]').value = state.text;	
+		formDOM.querySelector('input[name=countdown]').value = state.countdown;	
 	},
 	applyForm: function(){
 		var form = Quartz.utils.form2dict(this.QZ.getTabDOM().querySelector('form.state').elements);
@@ -107,10 +113,8 @@ Quartz.registerComponent('splash-screen', {
 			"translucid": form.translucid.checked,
 			"name": form.name.value,
 			"text": form.text.value,
-			"countdown": 0
+			"countdown": form.countdown.value
 		};
-
-		console.log(newState);
 
 		this.QZ.send('set-state', newState);
 	},

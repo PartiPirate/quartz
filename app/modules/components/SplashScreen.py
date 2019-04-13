@@ -11,7 +11,7 @@ class SplashScreen(_QZComponent.QZComponent):
 			"translucid": False,
 			"music": False,
 			"text": 'On arrive très vite.',
-			"countdown": 0,
+			"countdown": "",
 			"name": '<span class="thin">parti</span><span class="bold">pirate</span><span class="thin">.org</span>'
 		})
 
