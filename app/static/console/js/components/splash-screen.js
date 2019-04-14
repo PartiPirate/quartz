@@ -49,9 +49,9 @@ Quartz.registerComponent('splash-screen', {
 					<div class="col-sm-10">
 						<input type="text" name="countdown" class="form-control" placeholder="yyyy-mm-dd hh:mm:ss" maxlength="19">
 						<span class="btn-group" role="group">
-							<button type="button" onclick="Quartz.getComponent('splash-screen').setCountdown(5)">5 min</button>
-							<button type="button" onclick="Quartz.getComponent('splash-screen').setCountdown(10)">10 min</button>
-							<button type="button" onclick="Quartz.getComponent('splash-screen').setCountdown(30)">30 min</button>
+							<button type="button" class="btn btn-secondary btn-sm" onclick="Quartz.getComponent('splash-screen').setCountdown(5)">5 min</button>
+							<button type="button" class="btn btn-secondary btn-sm" onclick="Quartz.getComponent('splash-screen').setCountdown(10)">10 min</button>
+							<button type="button" class="btn btn-secondary btn-sm" onclick="Quartz.getComponent('splash-screen').setCountdown(30)">30 min</button>
 						</span>
 					</div>
 				</div>
