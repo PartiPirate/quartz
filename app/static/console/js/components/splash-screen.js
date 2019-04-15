@@ -48,6 +48,11 @@ Quartz.registerComponent('splash-screen', {
 					<label class="col-sm-2 col-form-label">Countdown to</label>
 					<div class="col-sm-10">
 						<input type="text" name="countdown" class="form-control" placeholder="yyyy-mm-dd hh:mm:ss" maxlength="19">
+						<span class="btn-group" role="group">
+							<button type="button" class="btn btn-secondary btn-sm" onclick="Quartz.getComponent('splash-screen').setCountdown(5)">5 min</button>
+							<button type="button" class="btn btn-secondary btn-sm" onclick="Quartz.getComponent('splash-screen').setCountdown(10)">10 min</button>
+							<button type="button" class="btn btn-secondary btn-sm" onclick="Quartz.getComponent('splash-screen').setCountdown(30)">30 min</button>
+						</span>
 					</div>
 				</div>
 
@@ -118,4 +123,10 @@ Quartz.registerComponent('splash-screen', {
 
 		this.QZ.send('set-state', newState);
 	},
+	setCountdown: function(minutes){
+		var now = new Date();
+		now.setMinutes( now.getMinutes() + minutes );
+		var formDOM = this.QZ.getTabDOM().querySelector('form.state');
+		formDOM.querySelector('input[name=countdown]').value = now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate() + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+	}
 });
